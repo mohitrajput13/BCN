@@ -16,9 +16,11 @@ import {
   ChevronUp
 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
-import Button from '@/components/ui/Button';
-import Card from '@/components/ui/Card';
+import Button from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { services } from '@/data';
+import { defaultServicesPageData } from '@/data/services';
+import CubeHero from '@/components/sections/CubeHero';
 
 const ServicesPage = () => {
   const [ref, inView] = useInView({
@@ -27,6 +29,9 @@ const ServicesPage = () => {
   });
 
   const [expandedService, setExpandedService] = useState<string | null>(null);
+
+  // Use CMS data
+  const servicesData = defaultServicesPageData;
 
   const iconMap = {
     Globe,
@@ -54,24 +59,122 @@ const ServicesPage = () => {
 
   return (
     <Layout>
-      <section className="relative section-padding overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-blue/10 via-transparent to-primary-purple/10" />
-        <div className="absolute top-20 left-20 w-72 h-72 bg-primary-blue/20 rounded-full blur-3xl" />
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <CubeHero
+        variant="services"
+        title={servicesData.heroContent.title}
+        subtitle={servicesData.heroContent.subtitle}
+        primaryCta={{ href: '/contact', label: servicesData.heroContent.primaryCta }}
+        secondaryCta={{ href: '/portfolio', label: servicesData.heroContent.secondaryCta }}
+      />
+      {/* Our Clients - Testimonials */}
+      <section className="section-padding bg-primary-slate/30">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center"
+            className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 font-montserrat">
-              Our Services
-            </h1>
-            <p className="text-xl md:text-2xl text-primary-gray mb-12 max-w-4xl mx-auto">
-              We offer comprehensive digital solutions to help your business grow and succeed in the modern world.
-            </p>
+            <div className="inline-flex items-center mb-4">
+              <div className="w-8 h-0.5 bg-primary-blue mr-3"></div>
+              <span className="text-primary-blue text-sm tracking-wider">{servicesData.clientsSection.subtitle}</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white font-montserrat">{servicesData.clientsSection.title}</h2>
           </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 card-gap">
+            {servicesData.testimonials.map((t, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: i * 0.1 }}>
+                <Card hover className="h-full group">
+                  <div className="flex items-start element-gap">
+                    <img src={t.avatar} alt={t.name} className="w-14 h-14 rounded-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                    <div className="flex-1">
+                      <div className="text-white font-semibold group-hover:text-primary-blue transition-colors duration-300">{t.name}</div>
+                      <div className="text-sm text-primary-gray mb-3 group-hover:text-white transition-colors duration-300">{t.role}</div>
+                      <p className="text-primary-gray text-sm leading-relaxed group-hover:text-white transition-colors duration-300">"{t.text}"</p>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Industries We Serve */}
+      <section className="section-padding">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center mb-4">
+              <div className="w-8 h-0.5 bg-primary-blue mr-3"></div>
+              <span className="text-primary-blue text-sm tracking-wider">{servicesData.industriesSection.subtitle}</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white font-montserrat">{servicesData.industriesSection.title}</h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 card-gap">
+            {servicesData.industries.map((it, i) => (
+              <Card key={i} hover className="h-full group">
+                <h3 className="text-xl font-semibold text-white mb-2 font-montserrat group-hover:text-primary-blue transition-colors duration-300">{it.title}</h3>
+                <p className="text-primary-gray text-sm group-hover:text-white transition-colors duration-300">{it.desc}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Consultation Banner */}
+      <section className="section-padding bg-black">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="relative overflow-hidden rounded-3xl">
+            <img src={servicesData.consultationBanner.image} alt="consult" className="w-full h-[340px] object-cover opacity-70" />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+              <div className="text-sm tracking-widest text-primary-blue mb-2">{servicesData.consultationBanner.subtitle}</div>
+              <h3 className="text-4xl md:text-6xl font-extrabold text-white font-montserrat mb-6">{servicesData.consultationBanner.title}</h3>
+              <Button className="bg-primary-blue hover:bg-primary-purple">{servicesData.consultationBanner.buttonText}</Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section-padding">
+        <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center mb-4">
+              <div className="w-8 h-0.5 bg-primary-blue mr-3"></div>
+              <span className="text-primary-blue text-sm tracking-wider">{servicesData.faqSection.subtitle}</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white font-montserrat">{servicesData.faqSection.title}</h2>
+          </motion.div>
+
+          <div className="space-y-4">
+            {servicesData.faqs.map((f, i) => (
+              <div key={i} className="rounded-lg bg-card text-card-foreground shadow-sm hover-glow-card group" style={{ border: 'none', outline: 'none' }}>
+                <details className="group" style={{ border: 'none', outline: 'none' }}>
+                  <summary 
+                    className="cursor-pointer list-none px-6 py-4 flex items-center justify-between hover:bg-primary-slate/20 transition-colors duration-200" 
+                    style={{ border: 'none', outline: 'none', boxShadow: 'none' }}
+                  >
+                    <span className="text-white font-medium group-hover:text-primary-blue transition-colors duration-300">{f.q}</span>
+                    <ChevronDown className="w-4 h-4 text-primary-gray group-open:rotate-180 transition-transform group-hover:text-primary-blue" />
+                  </summary>
+                  <div className="px-6 pb-6 text-primary-gray text-sm group-hover:text-white transition-colors duration-300">{f.a}</div>
+                </details>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
       <section className="py-8 bg-primary-slate/30">
@@ -107,22 +210,22 @@ const ServicesPage = () => {
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <Card hover className="h-full">
+                  <Card hover className="h-full group">
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-gradient-to-r from-primary-blue to-primary-purple rounded-xl flex items-center justify-center mx-auto mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary-blue to-primary-purple rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                         <IconComponent className="w-8 h-8 text-white" />
                       </div>
-                      <h3 className="text-xl font-semibold text-white mb-3 font-montserrat">
+                      <h3 className="text-xl font-semibold text-white mb-3 font-montserrat group-hover:text-primary-blue transition-colors duration-300">
                         {service.title}
                       </h3>
-                      <p className="text-primary-gray mb-4">
+                      <p className="text-primary-gray mb-4 group-hover:text-white transition-colors duration-300">
                         {service.description}
                       </p>
                       
                       <div className="space-y-2 mb-6">
                         {service.features.slice(0, isExpanded ? service.features.length : 3).map((feature, featureIndex) => (
-                          <div key={featureIndex} className="flex items-center text-sm text-primary-gray">
-                            <CheckCircle className="w-4 h-4 text-primary-blue mr-2 flex-shrink-0" />
+                          <div key={featureIndex} className="flex items-center text-sm text-primary-gray group-hover:text-white transition-colors duration-300">
+                            <CheckCircle className="w-4 h-4 text-primary-blue mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                             {feature}
                           </div>
                         ))}
@@ -168,40 +271,15 @@ const ServicesPage = () => {
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-montserrat">
-              Our Process
+              {servicesData.processSection.title}
             </h2>
             <p className="text-xl text-primary-gray max-w-3xl mx-auto">
-              We follow a proven methodology to ensure successful project delivery and client satisfaction.
+              {servicesData.processSection.subtitle}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 card-gap">
-            {[
-              {
-                step: '01',
-                title: 'Discovery',
-                description: 'We understand your business goals, requirements, and challenges through detailed consultation.',
-                icon: '🔍'
-              },
-              {
-                step: '02',
-                title: 'Planning',
-                description: 'We create a detailed project plan with timelines, milestones, and resource allocation.',
-                icon: '📋'
-              },
-              {
-                step: '03',
-                title: 'Development',
-                description: 'Our team builds your solution using cutting-edge technologies and best practices.',
-                icon: '⚙️'
-              },
-              {
-                step: '04',
-                title: 'Launch & Support',
-                description: 'We deploy your solution and provide ongoing support to ensure optimal performance.',
-                icon: '🚀'
-              }
-            ].map((process, index) => (
+            {servicesData.processSteps.map((process, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -209,15 +287,15 @@ const ServicesPage = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="text-center"
               >
-                <Card className="h-full">
-                  <div className="text-4xl mb-4">{process.icon}</div>
-                  <div className="text-2xl font-bold text-primary-blue mb-2 font-montserrat">
+                <Card hover className="h-full group">
+                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">{process.icon}</div>
+                  <div className="text-2xl font-bold text-primary-blue mb-2 font-montserrat group-hover:text-white transition-colors duration-300">
                     {process.step}
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-3 font-montserrat">
+                  <h3 className="text-xl font-semibold text-white mb-3 font-montserrat group-hover:text-primary-blue transition-colors duration-300">
                     {process.title}
                   </h3>
-                  <p className="text-primary-gray text-sm">
+                  <p className="text-primary-gray text-sm group-hover:text-white transition-colors duration-300">
                     {process.description}
                   </p>
                 </Card>
@@ -235,28 +313,15 @@ const ServicesPage = () => {
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-montserrat">
-              Technology Stack
+              {servicesData.techStackSection.title}
             </h2>
             <p className="text-xl text-primary-gray max-w-3xl mx-auto">
-              We use the latest technologies and frameworks to build robust, scalable, and secure solutions.
+              {servicesData.techStackSection.subtitle}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 element-gap lg:gap-8">
-            {[
-              { name: 'React', category: 'Frontend' },
-              { name: 'Next.js', category: 'Frontend' },
-              { name: 'Node.js', category: 'Backend' },
-              { name: 'Python', category: 'Backend' },
-              { name: 'MongoDB', category: 'Database' },
-              { name: 'PostgreSQL', category: 'Database' },
-              { name: 'AWS', category: 'Cloud' },
-              { name: 'Docker', category: 'DevOps' },
-              { name: 'Figma', category: 'Design' },
-              { name: 'Git', category: 'Version Control' },
-              { name: 'TypeScript', category: 'Language' },
-              { name: 'Tailwind', category: 'Styling' }
-            ].map((tech, index) => (
+            {servicesData.technologies.map((tech, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -264,11 +329,11 @@ const ServicesPage = () => {
                 transition={{ duration: 0.6, delay: index * 0.05 }}
                 className="text-center group"
               >
-                <Card hover className="p-6">
-                  <div className="text-2xl font-bold text-white mb-2 group-hover:text-primary-blue transition-colors duration-200">
+                <Card hover className="p-6 group">
+                  <div className="text-2xl font-bold text-white mb-2 group-hover:text-primary-blue transition-colors duration-300">
                     {tech.name}
                   </div>
-                  <div className="text-sm text-primary-gray">
+                  <div className="text-sm text-primary-gray group-hover:text-white transition-colors duration-300">
                     {tech.category}
                   </div>
                 </Card>
@@ -294,49 +359,7 @@ const ServicesPage = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 card-gap">
-            {[
-              {
-                name: 'Basic',
-                price: 'Starting at $2,999',
-                description: 'Perfect for small businesses and startups',
-                features: [
-                  'Up to 5 pages',
-                  'Responsive design',
-                  'Basic SEO',
-                  '3 months support',
-                  'Content management'
-                ],
-                popular: false
-              },
-              {
-                name: 'Professional',
-                price: 'Starting at $5,999',
-                description: 'Ideal for growing businesses',
-                features: [
-                  'Up to 15 pages',
-                  'Custom design',
-                  'Advanced SEO',
-                  '6 months support',
-                  'E-commerce integration',
-                  'Analytics setup'
-                ],
-                popular: true
-              },
-              {
-                name: 'Enterprise',
-                price: 'Custom Pricing',
-                description: 'For large organizations',
-                features: [
-                  'Unlimited pages',
-                  'Custom development',
-                  'Full SEO optimization',
-                  '12 months support',
-                  'Advanced integrations',
-                  'Dedicated support'
-                ],
-                popular: false
-              }
-            ].map((package_, index) => (
+            {servicesData.packages.map((package_, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -351,22 +374,22 @@ const ServicesPage = () => {
                     </span>
                   </div>
                 )}
-                <Card className={`h-full ${package_.popular ? 'border-primary-blue border-2' : ''}`}>
+                <Card hover className={`h-full group ${package_.popular ? 'border-primary-blue border-2' : ''}`}>
                   <div className="text-center">
-                    <h3 className="text-2xl font-bold text-white mb-2 font-montserrat">
+                    <h3 className="text-2xl font-bold text-white mb-2 font-montserrat group-hover:text-primary-blue transition-colors duration-300">
                       {package_.name}
                     </h3>
-                    <div className="text-3xl font-bold text-primary-blue mb-2 font-montserrat">
+                    <div className="text-3xl font-bold text-primary-blue mb-2 font-montserrat group-hover:text-white transition-colors duration-300">
                       {package_.price}
                     </div>
-                    <p className="text-primary-gray mb-6">
+                    <p className="text-primary-gray mb-6 group-hover:text-white transition-colors duration-300">
                       {package_.description}
                     </p>
                     
                     <ul className="space-y-3 mb-12">
                       {package_.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-sm text-primary-gray">
-                          <CheckCircle className="w-4 h-4 text-primary-blue mr-3 flex-shrink-0" />
+                        <li key={featureIndex} className="flex items-center text-sm text-primary-gray group-hover:text-white transition-colors duration-300">
+                          <CheckCircle className="w-4 h-4 text-primary-blue mr-3 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                           {feature}
                         </li>
                       ))}
@@ -395,23 +418,23 @@ const ServicesPage = () => {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <div className="bg-gradient-to-r from-primary-blue/10 to-primary-purple/10 rounded-2xl p-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-montserrat">
-                Ready to Get Started?
+            <Card hover className="bg-gradient-to-r from-primary-blue/10 to-primary-purple/10 p-12 group">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-montserrat group-hover:text-primary-blue transition-colors duration-300">
+                {servicesData.ctaSection.title}
               </h2>
-              <p className="text-xl text-primary-gray mb-12 max-w-3xl mx-auto">
-                Let's discuss your project requirements and find the perfect solution for your business needs.
+              <p className="text-xl text-primary-gray mb-12 max-w-3xl mx-auto group-hover:text-white transition-colors duration-300">
+                {servicesData.ctaSection.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row element-gap justify-center">
                 <Button size="lg" className="group">
-                  Start Your Project
+                  {servicesData.ctaSection.primaryCta}
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <Button variant="outline" size="lg">
-                  Schedule Consultation
+                  {servicesData.ctaSection.secondaryCta}
                 </Button>
               </div>
-            </div>
+            </Card>
           </motion.div>
         </div>
       </section>

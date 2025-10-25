@@ -51,7 +51,7 @@ const Header = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           isScrolled
-            ? 'bg-primary-slate/95 backdrop-blur-lg shadow-2xl border-b border-primary-blue/20'
+            ? 'bg-primary-slate/95 backdrop-blur-lg shadow-2xl border-primary-blue/20'
             : 'bg-transparent'
         }`}
       >
@@ -69,7 +69,7 @@ const Header = () => {
                 </span>
               </div>
               <span className="text-xl lg:text-2xl font-bold text-white font-montserrat tracking-tight">
-                  Black Cube
+              Black Cube
               </span>
             </Link>
 

@@ -14,15 +14,20 @@ import {
   ArrowRight
 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
-import Button from '@/components/ui/Button';
-import Card from '@/components/ui/Card';
+import Button from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { companyInfo } from '@/data';
+import { defaultContactPageData } from '@/data/contact';
+import CubeHero from '@/components/sections/CubeHero';
 
 const ContactPage = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  // Get data from CMS
+  const contactData = defaultContactPageData;
 
   const [contactForm, setContactForm] = useState({
     name: '',
@@ -62,96 +67,58 @@ const ContactPage = () => {
     setIsSubmitting(false);
   };
 
-  const contactInfo = [
-    {
-      icon: MapPin,
-      title: 'Address',
-      details: companyInfo.address,
-      description: 'Visit our office'
-    },
-    {
-      icon: Phone,
-      title: 'Phone',
-      details: companyInfo.phone,
-      description: 'Call us anytime'
-    },
-    {
-      icon: Mail,
-      title: 'Email',
-      details: companyInfo.email,
-      description: 'Send us an email'
-    },
-    {
-      icon: Clock,
-      title: 'Business Hours',
-      details: 'Mon - Fri: 9:00 AM - 6:00 PM',
-      description: 'GMT+4 (UAE Time)'
-    }
-  ];
+  const getIconComponent = (iconName: string) => {
+    const iconMap = {
+      MapPin,
+      Phone,
+      Mail,
+      Clock
+    };
+    return iconMap[iconName as keyof typeof iconMap] || MapPin;
+  };
 
-  const subjects = [
-    'General Inquiry',
-    'Web Development',
-    'Mobile App Development',
-    'UI/UX Design',
-    'Digital Marketing',
-    'Cloud Solutions',
-    'E-commerce Development',
-    'Other'
-  ];
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative section-padding overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-blue/10 via-transparent to-primary-purple/10" />
-        <div className="absolute top-20 right-20 w-96 h-96 bg-primary-purple/20 rounded-full blur-3xl" />
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 font-montserrat">
-              Get In Touch
-            </h1>
-            <p className="text-xl md:text-2xl text-primary-gray mb-12 max-w-4xl mx-auto">
-              Ready to start your next project? We'd love to hear from you. 
-              Get in touch with us today and let's discuss how we can help.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <CubeHero
+        variant="contact"
+        title={contactData.heroContent.title}
+        subtitle={contactData.heroContent.subtitle}
+        primaryCta={{ href: '#contact-form', label: contactData.heroContent.primaryCta }}
+        secondaryCta={{ href: '/services', label: contactData.heroContent.secondaryCta }}
+      />
 
       {/* Contact Information */}
       <section className="section-padding">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 card-gap">
-            {contactInfo.map((info, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card className="text-center h-full">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary-blue to-primary-purple rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <info.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2 font-montserrat">
-                    {info.title}
-                  </h3>
-                  <p className="text-primary-blue font-medium mb-2">
-                    {info.details}
-                  </p>
-                  <p className="text-primary-gray text-sm">
-                    {info.description}
-                  </p>
-                </Card>
-              </motion.div>
-            ))}
+            {contactData.contactInfo.map((info, index) => {
+              const IconComponent = getIconComponent(info.icon);
+              
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <Card hover className="text-center h-full group">
+                    <div className="w-16 h-16 bg-gradient-to-r from-primary-blue to-primary-purple rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <IconComponent className="w-8 h-8 text-white group-hover:text-primary-purple transition-colors duration-300" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-2 font-montserrat group-hover:text-primary-blue transition-colors duration-300">
+                      {info.title}
+                    </h3>
+                    <p className="text-primary-blue font-medium mb-2 group-hover:text-primary-purple transition-colors duration-300">
+                      {info.details}
+                    </p>
+                    <p className="text-primary-gray text-sm group-hover:text-white transition-colors duration-300">
+                      {info.description}
+                    </p>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -166,10 +133,10 @@ const ContactPage = () => {
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-montserrat">
-              Send Us a Message
+              {contactData.contactFormSection.title}
             </h2>
             <p className="text-xl text-primary-gray max-w-3xl mx-auto">
-              Have a project in mind? Fill out the form below and we'll get back to you within 24 hours.
+              {contactData.contactFormSection.description}
             </p>
           </motion.div>
 
@@ -180,12 +147,12 @@ const ContactPage = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <Card className="h-full">
+              <Card hover className="h-full group">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                       <label className="block text-white font-medium mb-2">
-                        Full Name *
+                        {contactData.contactFormSection.formLabels.name} *
                       </label>
                       <input
                         type="text"
@@ -193,14 +160,14 @@ const ContactPage = () => {
                         value={contactForm.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 bg-primary-black/50 border border-primary-slate/30 rounded-xl text-white placeholder-primary-gray focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
-                        placeholder="Enter your full name"
+                        className="w-full px-4 py-3 bg-primary-slate/30 border border-primary-slate/50 rounded-xl text-white placeholder-primary-gray focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all duration-200 group-hover:bg-primary-slate/40"
+                        placeholder={contactData.contactFormSection.placeholders.name}
                       />
                     </div>
 
                     <div>
                       <label className="block text-white font-medium mb-2">
-                        Email Address *
+                        {contactData.contactFormSection.formLabels.email} *
                       </label>
                       <input
                         type="email"
@@ -208,38 +175,38 @@ const ContactPage = () => {
                         value={contactForm.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 bg-primary-black/50 border border-primary-slate/30 rounded-xl text-white placeholder-primary-gray focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
-                        placeholder="Enter your email"
+                        className="w-full px-4 py-3 bg-primary-slate/30 border border-primary-slate/50 rounded-xl text-white placeholder-primary-gray focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all duration-200 group-hover:bg-primary-slate/40"
+                        placeholder={contactData.contactFormSection.placeholders.email}
                       />
                     </div>
 
                     <div>
                       <label className="block text-white font-medium mb-2">
-                        Phone Number
+                        {contactData.contactFormSection.formLabels.phone}
                       </label>
                       <input
                         type="tel"
                         name="phone"
                         value={contactForm.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-primary-black/50 border border-primary-slate/30 rounded-xl text-white placeholder-primary-gray focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
-                        placeholder="Enter your phone number"
+                        className="w-full px-4 py-3 bg-primary-slate/30 border border-primary-slate/50 rounded-xl text-white placeholder-primary-gray focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all duration-200 group-hover:bg-primary-slate/40"
+                        placeholder={contactData.contactFormSection.placeholders.phone}
                       />
                     </div>
 
                     <div>
                       <label className="block text-white font-medium mb-2">
-                        Subject *
+                        {contactData.contactFormSection.formLabels.subject} *
                       </label>
                       <select
                         name="subject"
                         value={contactForm.subject}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 bg-primary-black/50 border border-primary-slate/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                        className="w-full px-4 py-3 bg-primary-slate/30 border border-primary-slate/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all duration-200 group-hover:bg-primary-slate/40"
                       >
-                        <option value="">Select a subject</option>
-                        {subjects.map((subject, index) => (
+                        <option value="">{contactData.contactFormSection.placeholders.subject}</option>
+                        {contactData.subjects.map((subject, index) => (
                           <option key={index} value={subject}>
                             {subject}
                           </option>
@@ -250,7 +217,7 @@ const ContactPage = () => {
 
                   <div>
                     <label className="block text-white font-medium mb-2">
-                      Message *
+                      {contactData.contactFormSection.formLabels.message} *
                     </label>
                     <textarea
                       name="message"
@@ -258,8 +225,8 @@ const ContactPage = () => {
                       onChange={handleInputChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-3 bg-primary-black/50 border border-primary-slate/30 rounded-xl text-white placeholder-primary-gray focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
-                      placeholder="Tell us about your project or inquiry..."
+                      className="w-full px-4 py-3 bg-primary-slate/30 border border-primary-slate/50 rounded-xl text-white placeholder-primary-gray focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all duration-200 group-hover:bg-primary-slate/40"
+                      placeholder={contactData.contactFormSection.placeholders.message}
                     />
                   </div>
 
@@ -269,7 +236,7 @@ const ContactPage = () => {
                     className="w-full group"
                     isLoading={isSubmitting}
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting ? contactData.contactFormSection.submittingButton : contactData.contactFormSection.submitButton}
                     <Send className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </form>
@@ -284,65 +251,59 @@ const ContactPage = () => {
               className="space-y-8"
             >
               {/* Map Placeholder */}
-              <Card className="h-64">
-                <div className="h-full bg-gradient-to-br from-primary-blue/20 to-primary-purple/20 rounded-xl flex items-center justify-center">
+              <Card hover className="h-64 group">
+                <div className="h-full bg-gradient-to-br from-primary-blue/20 to-primary-purple/20 rounded-xl flex items-center justify-center group-hover:from-primary-blue/30 group-hover:to-primary-purple/30 transition-all duration-300">
                   <div className="text-center">
-                    <MapPin className="w-12 h-12 text-primary-blue mx-auto mb-4" />
-                    <p className="text-primary-gray">Interactive Map</p>
-                    <p className="text-sm text-primary-gray">Business Bay, Dubai, UAE</p>
+                    <MapPin className="w-12 h-12 text-primary-blue mx-auto mb-4 group-hover:text-primary-purple transition-colors duration-300" />
+                    <p className="text-primary-gray group-hover:text-white transition-colors duration-300">{contactData.mapSection.title}</p>
+                    <p className="text-sm text-primary-gray group-hover:text-primary-blue transition-colors duration-300">{contactData.mapSection.location}</p>
                   </div>
                 </div>
               </Card>
 
               {/* Quick Contact */}
-              <Card>
-                <h3 className="text-xl font-semibold text-white mb-4 font-montserrat">
-                  Quick Contact
+              <Card hover className="group">
+                <h3 className="text-xl font-semibold text-white mb-4 font-montserrat group-hover:text-primary-blue transition-colors duration-300">
+                  {contactData.quickContactSection.title}
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
-                    <Phone className="w-5 h-5 text-primary-blue" />
+                    <Phone className="w-5 h-5 text-primary-blue group-hover:text-primary-purple transition-colors duration-300" />
                     <a
                       href={`tel:${companyInfo.phone}`}
-                      className="text-primary-gray hover:text-primary-blue transition-colors duration-200"
+                      className="text-primary-gray hover:text-primary-blue transition-colors duration-200 group-hover:text-white"
                     >
                       {companyInfo.phone}
                     </a>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <Mail className="w-5 h-5 text-primary-blue" />
+                    <Mail className="w-5 h-5 text-primary-blue group-hover:text-primary-purple transition-colors duration-300" />
                     <a
                       href={`mailto:${companyInfo.email}`}
-                      className="text-primary-gray hover:text-primary-blue transition-colors duration-200"
+                      className="text-primary-gray hover:text-primary-blue transition-colors duration-200 group-hover:text-white"
                     >
                       {companyInfo.email}
                     </a>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <MessageCircle className="w-5 h-5 text-primary-blue" />
-                    <span className="text-primary-gray">Live Chat Available</span>
+                    <MessageCircle className="w-5 h-5 text-primary-blue group-hover:text-primary-purple transition-colors duration-300" />
+                    <span className="text-primary-gray group-hover:text-white transition-colors duration-300">{contactData.quickContactSection.liveChatText}</span>
                   </div>
                 </div>
               </Card>
 
               {/* Response Time */}
-              <Card>
-                <h3 className="text-xl font-semibold text-white mb-4 font-montserrat">
-                  Response Time
+              <Card hover className="group">
+                <h3 className="text-xl font-semibold text-white mb-4 font-montserrat group-hover:text-primary-blue transition-colors duration-300">
+                  {contactData.responseTimeSection.title}
                 </h3>
                 <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-primary-blue" />
-                    <span className="text-primary-gray">Email: Within 24 hours</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-primary-blue" />
-                    <span className="text-primary-gray">Phone: Immediate</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-primary-blue" />
-                    <span className="text-primary-gray">Live Chat: Instant</span>
-                  </div>
+                  {contactData.responseTimes.map((responseTime, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      <CheckCircle className="w-5 h-5 text-primary-blue group-hover:text-primary-purple transition-colors duration-300" />
+                      <span className="text-primary-gray group-hover:text-white transition-colors duration-300">{responseTime.type}: {responseTime.time}</span>
+                    </div>
+                  ))}
                 </div>
               </Card>
             </motion.div>
@@ -360,51 +321,26 @@ const ContactPage = () => {
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-montserrat">
-              Frequently Asked Questions
+              {contactData.faqSection.title}
             </h2>
             <p className="text-xl text-primary-gray max-w-3xl mx-auto">
-              Find answers to common questions about our services and process.
+              {contactData.faqSection.description}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 card-gap">
-            {[
-              {
-                question: 'How long does a typical project take?',
-                answer: 'Project timelines vary depending on complexity. A simple website takes 2-4 weeks, while complex applications can take 3-6 months. We provide detailed timelines during consultation.'
-              },
-              {
-                question: 'Do you provide ongoing support?',
-                answer: 'Yes, we offer comprehensive support packages including maintenance, updates, and technical support. Our support plans are tailored to your specific needs.'
-              },
-              {
-                question: 'What technologies do you use?',
-                answer: 'We use modern technologies including React, Next.js, Node.js, Python, MongoDB, AWS, and more. We choose the best stack for each project\'s requirements.'
-              },
-              {
-                question: 'Do you work with international clients?',
-                answer: 'Absolutely! We work with clients worldwide. Our team is experienced in remote collaboration and can accommodate different time zones.'
-              },
-              {
-                question: 'What is your pricing structure?',
-                answer: 'Our pricing is project-based and depends on scope, complexity, and timeline. We provide detailed quotes after understanding your requirements.'
-              },
-              {
-                question: 'Do you offer maintenance services?',
-                answer: 'Yes, we provide ongoing maintenance, updates, security patches, and performance optimization to keep your project running smoothly.'
-              }
-            ].map((faq, index) => (
+            {contactData.faqs.map((faq, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Card className="h-full">
-                  <h3 className="text-lg font-semibold text-white mb-3 font-montserrat">
+                <Card hover className="h-full group">
+                  <h3 className="text-lg font-semibold text-white mb-3 font-montserrat group-hover:text-primary-blue transition-colors duration-300">
                     {faq.question}
                   </h3>
-                  <p className="text-primary-gray">
+                  <p className="text-primary-gray group-hover:text-white transition-colors duration-300">
                     {faq.answer}
                   </p>
                 </Card>
@@ -423,24 +359,23 @@ const ContactPage = () => {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <div className="bg-gradient-to-r from-primary-blue/10 to-primary-purple/10 rounded-2xl p-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-montserrat">
-                Ready to Start Your Project?
+            <Card hover className="bg-gradient-to-r from-primary-blue/10 to-primary-purple/10 rounded-2xl p-12 group">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-montserrat group-hover:text-primary-blue transition-colors duration-300">
+                {contactData.ctaSection.title}
               </h2>
-              <p className="text-xl text-primary-gray mb-12 max-w-3xl mx-auto">
-                Don't wait! Get in touch with us today and let's discuss how we can help 
-                bring your digital vision to life.
+              <p className="text-xl text-primary-gray mb-12 max-w-3xl mx-auto group-hover:text-white transition-colors duration-300">
+                {contactData.ctaSection.description}
               </p>
               <div className="flex flex-col sm:flex-row element-gap justify-center">
                 <Button size="lg" className="group">
-                  Start Your Project
+                  {contactData.ctaSection.primaryCta}
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <Button variant="outline" size="lg">
-                  Schedule a Call
+                  {contactData.ctaSection.secondaryCta}
                 </Button>
               </div>
-            </div>
+            </Card>
           </motion.div>
         </div>
       </section>

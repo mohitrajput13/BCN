@@ -27,7 +27,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-primary-slate border-t border-primary-slate/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className=" w-full px-3 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
@@ -36,7 +36,7 @@ const Footer = () => {
                 <span className="text-white font-bold text-sm">BC</span>
               </div>
               <span className="text-xl font-bold text-white font-montserrat">
-                Black Cube
+                {companyInfo.name.split(' ')[0]}
               </span>
             </div>
             <p className="text-primary-gray text-sm leading-relaxed">
@@ -152,7 +152,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-primary-slate/50 mt-8 pt-8">
+        <div className="mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-primary-gray text-sm">
               © {currentYear} {companyInfo.name}. All rights reserved.
