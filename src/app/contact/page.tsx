@@ -14,8 +14,8 @@ import {
   ArrowRight
 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
-import Button from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import Button from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { companyInfo } from '@/data';
 import { defaultContactPageData } from '@/data/contact';
 import CubeHero from '@/components/sections/CubeHero';

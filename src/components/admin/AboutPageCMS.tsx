@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Button from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -209,7 +209,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">Title</label>
                 <Input
                   value={heroContent.title}
-                  onChange={(e) => setHeroContent({...heroContent, title: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroContent({...heroContent, title: e.target.value})}
                   placeholder="Enter title"
                 />
               </div>
@@ -217,7 +217,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">Subtitle</label>
                 <Textarea
                   value={heroContent.subtitle}
-                  onChange={(e) => setHeroContent({...heroContent, subtitle: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHeroContent({...heroContent, subtitle: e.target.value})}
                   placeholder="Enter subtitle"
                   rows={3}
                 />
@@ -227,7 +227,7 @@ export function AboutPageCMS() {
                   <label className="block text-sm font-medium mb-2">Primary CTA</label>
                   <Input
                     value={heroContent.primaryCta}
-                    onChange={(e) => setHeroContent({...heroContent, primaryCta: e.target.value})}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroContent({...heroContent, primaryCta: e.target.value})}
                     placeholder="Primary CTA text"
                   />
                 </div>
@@ -235,7 +235,7 @@ export function AboutPageCMS() {
                   <label className="block text-sm font-medium mb-2">Secondary CTA</label>
                   <Input
                     value={heroContent.secondaryCta}
-                    onChange={(e) => setHeroContent({...heroContent, secondaryCta: e.target.value})}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroContent({...heroContent, secondaryCta: e.target.value})}
                     placeholder="Secondary CTA text"
                   />
                 </div>
@@ -254,12 +254,12 @@ export function AboutPageCMS() {
                   <div className="space-y-2">
                     <Input
                       value={stat.number}
-                      onChange={(e) => updateCompanyStat(index, 'number', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateCompanyStat(index, 'number', e.target.value)}
                       placeholder="Number"
                     />
                     <Input
                       value={stat.label}
-                      onChange={(e) => updateCompanyStat(index, 'label', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateCompanyStat(index, 'label', e.target.value)}
                       placeholder="Label"
                     />
                   </div>
@@ -282,12 +282,12 @@ export function AboutPageCMS() {
                     </div>
                     <Input
                       value={value.title}
-                      onChange={(e) => updateValue(value.id, 'title', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateValue(value.id, 'title', e.target.value)}
                       placeholder="Title"
                     />
                     <Textarea
                       value={value.description}
-                      onChange={(e) => updateValue(value.id, 'description', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateValue(value.id, 'description', e.target.value)}
                       placeholder="Description"
                       rows={3}
                     />
@@ -315,12 +315,12 @@ export function AboutPageCMS() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Input
                       value={milestone.year}
-                      onChange={(e) => updateMilestone(index, 'year', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateMilestone(index, 'year', e.target.value)}
                       placeholder="Year"
                     />
                     <Input
                       value={milestone.title}
-                      onChange={(e) => updateMilestone(index, 'title', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateMilestone(index, 'title', e.target.value)}
                       placeholder="Title"
                     />
                     <div className="flex items-center space-x-2">
@@ -331,7 +331,7 @@ export function AboutPageCMS() {
                   </div>
                   <Textarea
                     value={milestone.description}
-                    onChange={(e) => updateMilestone(index, 'description', e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateMilestone(index, 'description', e.target.value)}
                     placeholder="Description"
                     rows={2}
                     className="mt-4"
@@ -365,17 +365,17 @@ export function AboutPageCMS() {
                     </div>
                     <Input
                       value={member.name}
-                      onChange={(e) => updateTeamMember(member.id, 'name', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateTeamMember(member.id, 'name', e.target.value)}
                       placeholder="Name"
                     />
                     <Input
                       value={member.position}
-                      onChange={(e) => updateTeamMember(member.id, 'position', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateTeamMember(member.id, 'position', e.target.value)}
                       placeholder="Position"
                     />
                     <Textarea
                       value={member.bio}
-                      onChange={(e) => updateTeamMember(member.id, 'bio', e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => updateTeamMember(member.id, 'bio', e.target.value)}
                       placeholder="Bio"
                       rows={2}
                     />
@@ -397,7 +397,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">Section Title</label>
                 <Input
                   value={clientsSection.title}
-                  onChange={(e) => setClientsSection({...clientsSection, title: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setClientsSection({...clientsSection, title: e.target.value})}
                   placeholder="Enter section title"
                 />
               </div>
@@ -405,7 +405,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">Section Subtitle</label>
                 <Input
                   value={clientsSection.subtitle}
-                  onChange={(e) => setClientsSection({...clientsSection, subtitle: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setClientsSection({...clientsSection, subtitle: e.target.value})}
                   placeholder="Enter section subtitle"
                 />
               </div>
@@ -422,7 +422,7 @@ export function AboutPageCMS() {
                   <div key={index} className="flex items-center space-x-2">
                     <Input
                       value={logo}
-                      onChange={(e) => {
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const updated = [...clientLogos];
                         updated[index] = e.target.value;
                         setClientLogos(updated);
@@ -454,7 +454,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">Section Title</label>
                 <Input
                   value={whyChooseUsSection.title}
-                  onChange={(e) => setWhyChooseUsSection({...whyChooseUsSection, title: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWhyChooseUsSection({...whyChooseUsSection, title: e.target.value})}
                   placeholder="Enter section title"
                 />
               </div>
@@ -462,7 +462,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">Section Subtitle</label>
                 <Textarea
                   value={whyChooseUsSection.subtitle}
-                  onChange={(e) => setWhyChooseUsSection({...whyChooseUsSection, subtitle: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setWhyChooseUsSection({...whyChooseUsSection, subtitle: e.target.value})}
                   placeholder="Enter section subtitle"
                   rows={3}
                 />
@@ -480,7 +480,7 @@ export function AboutPageCMS() {
                   <div key={index} className="flex items-center space-x-2">
                     <Input
                       value={point}
-                      onChange={(e) => {
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const updated = [...whyChooseUs];
                         updated[index] = e.target.value;
                         setWhyChooseUs(updated);
@@ -510,7 +510,7 @@ export function AboutPageCMS() {
                   <label className="block text-sm font-medium mb-2">Satisfaction Rate</label>
                   <Input
                     value={whyChooseUsSection.stats.satisfactionRate}
-                    onChange={(e) => setWhyChooseUsSection({
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWhyChooseUsSection({
                       ...whyChooseUsSection,
                       stats: {...whyChooseUsSection.stats, satisfactionRate: e.target.value}
                     })}
@@ -521,7 +521,7 @@ export function AboutPageCMS() {
                   <label className="block text-sm font-medium mb-2">Satisfaction Label</label>
                   <Input
                     value={whyChooseUsSection.stats.satisfactionLabel}
-                    onChange={(e) => setWhyChooseUsSection({
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWhyChooseUsSection({
                       ...whyChooseUsSection,
                       stats: {...whyChooseUsSection.stats, satisfactionLabel: e.target.value}
                     })}
@@ -532,7 +532,7 @@ export function AboutPageCMS() {
                   <label className="block text-sm font-medium mb-2">Satisfaction Subtext</label>
                   <Input
                     value={whyChooseUsSection.stats.satisfactionSubtext}
-                    onChange={(e) => setWhyChooseUsSection({
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWhyChooseUsSection({
                       ...whyChooseUsSection,
                       stats: {...whyChooseUsSection.stats, satisfactionSubtext: e.target.value}
                     })}
@@ -548,7 +548,7 @@ export function AboutPageCMS() {
                     <div key={index} className="flex items-center space-x-2">
                       <Input
                         value={metric.label}
-                        onChange={(e) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           const updated = [...whyChooseUsSection.stats.metrics];
                           updated[index] = {...updated[index], label: e.target.value};
                           setWhyChooseUsSection({
@@ -561,7 +561,7 @@ export function AboutPageCMS() {
                       />
                       <Input
                         value={metric.percentage}
-                        onChange={(e) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           const updated = [...whyChooseUsSection.stats.metrics];
                           updated[index] = {...updated[index], percentage: parseInt(e.target.value) || 0};
                           setWhyChooseUsSection({
@@ -608,7 +608,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">CTA Title</label>
                 <Input
                   value={ctaSection.title}
-                  onChange={(e) => setCtaSection({...ctaSection, title: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCtaSection({...ctaSection, title: e.target.value})}
                   placeholder="Enter CTA title"
                 />
               </div>
@@ -616,7 +616,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">CTA Subtitle</label>
                 <Textarea
                   value={ctaSection.subtitle}
-                  onChange={(e) => setCtaSection({...ctaSection, subtitle: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setCtaSection({...ctaSection, subtitle: e.target.value})}
                   placeholder="Enter CTA subtitle"
                   rows={3}
                 />
@@ -626,7 +626,7 @@ export function AboutPageCMS() {
                   <label className="block text-sm font-medium mb-2">Primary CTA</label>
                   <Input
                     value={ctaSection.primaryCta}
-                    onChange={(e) => setCtaSection({...ctaSection, primaryCta: e.target.value})}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCtaSection({...ctaSection, primaryCta: e.target.value})}
                     placeholder="Primary CTA text"
                   />
                 </div>
@@ -634,7 +634,7 @@ export function AboutPageCMS() {
                   <label className="block text-sm font-medium mb-2">Secondary CTA</label>
                   <Input
                     value={ctaSection.secondaryCta}
-                    onChange={(e) => setCtaSection({...ctaSection, secondaryCta: e.target.value})}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCtaSection({...ctaSection, secondaryCta: e.target.value})}
                     placeholder="Secondary CTA text"
                   />
                 </div>
@@ -801,3 +801,4 @@ export function AboutPageCMS() {
     </div>
   );
 }
+

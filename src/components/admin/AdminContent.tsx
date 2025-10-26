@@ -1,14 +1,11 @@
 'use client';
 import { useContent } from "@/contexts/ContentContext";
 import { useEffect } from "react";
-import Button from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 // import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { Badge } from "@/components/ui/badge";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Save, FileText, Image, Type, BarChart3, Settings as SettingsIcon, Users, MessageSquare, Phone, Video } from "lucide-react";
+import {FileText, Image, Type, BarChart3, Settings as SettingsIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ContactManagement } from "./ContactManagement";
 import { JobApplications } from "./JobApplications";
