@@ -2,7 +2,7 @@
 import { useContent } from "@/contexts/ContentContext";
 import { useEffect } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { Badge } from "@/components/ui/badge";
 import {FileText, Image, Type, BarChart3, Settings as SettingsIcon } from "lucide-react";

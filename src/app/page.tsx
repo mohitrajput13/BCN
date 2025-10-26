@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 import {
   ArrowRight,
   Cloud,
@@ -21,8 +22,8 @@ import {
   Sparkles
 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
-import Button from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
+import Button from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 const HomePage = () => {
   const prefersReducedMotion = useReducedMotion();
@@ -208,8 +209,9 @@ const HomePage = () => {
   };
 
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    <Layout>
+      <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+        <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -256,7 +258,7 @@ const HomePage = () => {
             Read our docs
           </a>
         </div>
-      </section>
+      </main>
       <section ref={ref} className="section-padding">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <motion.div
@@ -286,7 +288,11 @@ const HomePage = () => {
                   <div className="text-center">
                     <div className="w-16 h-16 bg-gradient-to-r from-primary-blue to-primary-purple rounded-xl flex items-center justify-center mx-auto mb-4">
                       {(() => {
-                        const iconComponents: Record<string, any> = { Code, Palette, Cloud };
+                        const iconComponents: Record<string, any> = { 
+                          Code: Code, 
+                          Palette: Palette, 
+                          Cloud: Cloud 
+                        };
                         const IconComp = iconComponents[service.icon as string] || Code;
                         return <IconComp className="w-8 h-8 text-white" />;
                       })()}
@@ -656,6 +662,9 @@ const HomePage = () => {
           </motion.div>
         </div>
       </section>
+      </div>
     </Layout>
   );
-}
+};
+
+export default HomePage;

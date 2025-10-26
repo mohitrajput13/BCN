@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import React, { useRef } from "react";
-import Button from "@/components/ui/Button";
+import Button from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 export type CubeHeroVariant = "about" | "services" | "portfolio" | "career" | "contact";

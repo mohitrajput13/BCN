@@ -16,8 +16,8 @@ import {
   ChevronUp
 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
-import Button from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
+import Button from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { services } from '@/data';
 import { defaultServicesPageData } from '@/data/services';
 import CubeHero from '@/components/sections/CubeHero';
